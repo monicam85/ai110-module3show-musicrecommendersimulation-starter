@@ -21,16 +21,22 @@ Prompts:
 
 ## 3. How the Model Works  
 
-Explain your scoring approach in simple language.  
+Think of it as a judge with a 10-point scorecard. The judge looks at every song in the catalog, one at a time, and asks how well it fits what the listener says they want. The songs with the most points are recommended.
 
-Prompts:  
+**What the listener tells us:** their favorite genre, their favorite mood, how energetic they want the music (a number from 0 to 1), and whether they like acoustic sound. They can optionally add a few extras, such as how upbeat or how recent the music should be.
 
-- What features of each song are used (genre, energy, mood, etc.)  
-- What user preferences are considered  
-- How does the model turn those into a score  
-- What changes did you make from the starter logic  
+**How a song earns points:**
 
-Avoid code here. Pretend you are explaining the idea to a friend who does not program.
+- **Energy (up to 3.5 points):** the closer the song's energy is to the listener's target, the more points. A near-perfect match earns almost all 3.5, and a song that is far off earns none.
+- **Mood (up to 3 points):** full points if the mood is the same, half points if it is a close cousin (for example "chill" and "relaxed"), none otherwise.
+- **Acoustic feel (up to 2 points):** closeness to a mostly acoustic sound for acoustic fans, or a mostly electronic sound for everyone else.
+- **Genre (up to 1.5 points):** all or nothing. The song either has the listener's favorite genre or it doesn't.
+
+Extras only count if the listener asked for them, and the final score is simply points earned divided by points available, so it always lands between 0 and 1. The songs are then sorted from highest to lowest and the top five are shown, each with a plain-language list of why it earned its points.
+
+**Why mood counts for more than genre:** a genre label is a blunt tool. "Pop" and "indie pop" would count as a total miss, and most genres in this small catalog have only one song. Mood and energy describe how a song actually feels, so they get most of the points. A happy, high-energy song from a neighboring genre can therefore beat a same-genre song with the wrong vibe.
+
+**Changes from the starter logic:** the starter only had empty placeholders. I added the point-based scorecard, the half-credit for related moods, a stricter closeness rule (a gap of 0.5 or more earns zero rather than half credit), and the "reasons" list so every recommendation is explainable.
 
 ---
 
